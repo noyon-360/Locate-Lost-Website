@@ -53,7 +53,7 @@ class UserAuthController extends Controller
             User::where('email', $request->email)->update([
                 'last_login_at' => now(),
             ]);
-            return redirect()->route('user.dashboard')->with('success', 'Welcome to the User Dashboard');
+            return redirect()->intended()->with('success', 'Welcome to the User Dashboard');
         }
 
         return back()->withErrors([
@@ -68,16 +68,36 @@ class UserAuthController extends Controller
             'email' => 'required|email|unique:users,email', // Corrected the validation rule
             'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => 'user',
-            'password' => Hash::make($request->password),
-            'last_login_at' => now(),
-            'status' => 'pending',
-        ]);
+        $data = $request->only('name', 'email', 'password');
+        $data['password'] = Hash::make($data['password']);
+        $data['role'] = 'user';
+        $data['last_login_at'] = now();
+        $data['status'] = 'pending';
+
+        // Handle the profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $profilePicture = $request->file('profile_picture');
+            $data['profile_picture'] = $profilePicture->store('uploads/profile_pictures', 'public');
+        }
+
+
+        // echo '<pre>';
+        // print_r($data);
+
+        $user = User::create($data);
+
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'role' => 'user',
+        //     'password' => Hash::make($request->password),
+        //     'last_login_at' => now(),
+        //     'image' => $request->hasFile('image') ? $request->file('image')->store('uploads/user_images', 'public') : null,
+        //     'status' => 'pending',
+        // ]);
 
         // Create a notification for the admin
         Notification::create([
@@ -86,6 +106,7 @@ class UserAuthController extends Controller
             'data' => json_encode([
                 'name' => $user->name,
                 'email' => $user->email,
+                'image' => $user->image,
             ]),
         ]);
 
@@ -100,6 +121,6 @@ class UserAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'You have been logged out.');
+        return redirect()->intended()->with('success', 'You have been logged out.');
     }
 }

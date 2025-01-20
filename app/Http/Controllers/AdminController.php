@@ -73,6 +73,8 @@ class AdminController extends Controller
     public function pendingUsers()
     {
         $pendingUsers = User::where('status', 'pending')->get();
+        // echo '<pre>';
+        // print_r($pendingUsers);
         return view('admin.pending_users', compact('pendingUsers'));
     }
 

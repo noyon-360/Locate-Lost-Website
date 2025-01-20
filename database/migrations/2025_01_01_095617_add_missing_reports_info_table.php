@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('submitted_infos')) {
-            Schema::create('submitted_infos', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('missing_person_id');
-                $table->text('description');
-                $table->timestamps();
-
-                // Foreign key constraint
-                $table->foreign('missing_person_id')->references('id')->on('missing_people')->onDelete('cascade');
-            });
-        }
+        Schema::create('submitted_infos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('missing_person_id');
+            $table->text('description');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('missing_person_id')->references('id')->on('missing_people')->onDelete('cascade');
+        });
     }
 
     /**

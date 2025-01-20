@@ -20,3 +20,7 @@ class AdminSeeder extends Seeder
         ]);
     }
 }
+
+// php artisan db:seed --class=AdminSeeder
+// php artisan db:seed --class=UsersSeeder
+// php artisan db:seed --class=MissingPeopleSeeder

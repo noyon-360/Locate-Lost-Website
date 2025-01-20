@@ -5,13 +5,18 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MissingPersonController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserAuthController;
 use App\Models\MissingPerson;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('/', [HomeController::class, 'view'])->name('welcome');
+
+// Missing Report route
+Route::get('/missing-reports', [HomeController::class, 'index'])->name('missing-reports');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin.guest'], function () {
@@ -23,8 +28,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('user/{id}', [AdminController::class, 'userProfile'])->name('user.profile');
 
-        Route::get('/admin/pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_users');
-        Route::get('/admin/users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.users.approve');
+        Route::get('pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_users');
+        Route::get('users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.users.approve');
 
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     });
@@ -66,6 +71,8 @@ Route::get('/add-missing-person', function () {
 
 Route::middleware(['auth:web,admin'])->group(function () {
 
+    Route::get('/profile/{id}', [ProfileController::class, 'commonProfile'])->name('common-profile');
+
     Route::post('/submit-missing-person', [MissingPersonController::class, 'store'])->name('submit-missing-person');
 
     Route::get('/missing-person-success/{id}', [MissingPersonController::class, 'showSuccess'])->name('missing-person-success');
@@ -77,6 +84,10 @@ Route::middleware(['auth:web,admin'])->group(function () {
     Route::get('/person/{id}', [MissingPersonController::class, 'person_details_show'])->name('person.details');
     Route::get('/missing_person/{id}/add_info', [MissingPersonController::class, 'addInfo'])->name('missing_person.add_info');
     Route::post('/missing_person/{id}/store_info', [MissingPersonController::class, 'storeInfo'])->name('missing_person.store_info');
+
+    Route::get('/location/{id}', [MissingPersonController::class, 'showLocation'])->name('show-location');
+
+    Route::delete('/report/update/{id}', [MissingPersonController::class, 'destroy'])->name('report.delete');
 });
 
 // Route::middleware(['auth:web, admin'])->get('/add-missing-person', [MissingPersonController::class, 'missiongPersonView'])->name('add-missing-person');

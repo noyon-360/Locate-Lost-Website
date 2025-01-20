@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('user_email');
             $table->unsignedBigInteger('user_id');
             $table->date('missing_date')->nullable();
+            $table->enum('status', ['pending', 'found'])->default('pending');
             $table->timestamps();
 
             // Foreign key constraint (optional, if you have a users table)

@@ -24,16 +24,22 @@ class MissingPerson extends EloquentModel
         'email',
         'front_image',
         'additional_pictures',
-        'missing_date'
+        'missing_date',
+        'status'
     ];
 
     // Add the relationship method
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_email', 'email');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    
+    public function submittedInfos()
+    {
+        // return the total number of submitted information for a missing person
+        return $this->hasMany(SubmittedInfo::class);
+    }
+
 
     protected static function boot()
     {

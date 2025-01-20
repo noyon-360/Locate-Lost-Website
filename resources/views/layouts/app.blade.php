@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locate Lost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </link>
+
+    @vite('resources/js/imageModal.js')
+    @vite('resources/js/toggleDrawer.js')
     @vite('resources/css/app.css')
     <script>
-    function toggleDrawer() {
-        document.getElementById('drawer').classList.toggle('hidden');
-    }
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('hidden');
+        }
     </script>
 </head>
 
@@ -28,6 +34,14 @@
             </button>
             <div class="hidden md:flex items-center space-x-4 ">
                 <!-- Common link for all roles -->
+
+                <!-- Welcome page -->
+                <a href="{{ url('/') }}" class="text-white hover:text-gray-300 transition duration-300">Home</a>
+
+                <!-- Missing Report Page -->
+                <a href="{{ route('missing-reports') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Missing Reports</a>
+
                 <a href="{{ route('add-missing-person') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing
                     Report</a>

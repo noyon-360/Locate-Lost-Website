@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
@@ -13,13 +14,16 @@ class User extends Model implements AuthenticatableContract
         'name',
         'email',
         'password',
-        'role', 
+        'role',
+        'profile_picture',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    
 
     public function missingReports()
     {
