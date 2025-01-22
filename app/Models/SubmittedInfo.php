@@ -19,7 +19,6 @@ class SubmittedInfo extends Model
         return $this->belongsTo(MissingPerson::class);
     }
 
-
     public function user()
     {
         return $this->belongsTo(User::class);

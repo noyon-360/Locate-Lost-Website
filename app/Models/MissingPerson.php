@@ -36,10 +36,8 @@ class MissingPerson extends EloquentModel
 
     public function submittedInfos()
     {
-        // return the total number of submitted information for a missing person
         return $this->hasMany(SubmittedInfo::class);
     }
-
 
     protected static function boot()
     {

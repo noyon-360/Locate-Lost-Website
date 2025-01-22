@@ -90,7 +90,7 @@
                         <td class="py-3 px-6">{{ $user->last_login_at ?? 'N/A' }}</td>
                         <td class="py-3 px-6">{{ $user->missing_reports_count }}</td>
                         <td class="py-3 px-6">
-                            <a href="{{ route('user.profile', $user->id) }}" class="text-blue-600 hover:underline">
+                            <a href="{{ route('users.profile', $user->id) }}" class="text-blue-600 hover:underline">
                                 View Profile
                             </a>
                         </td>

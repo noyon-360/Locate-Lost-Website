@@ -7,7 +7,9 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MissingPersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UserController;
 use App\Models\MissingPerson;
 use Illuminate\Support\Facades\Route;
 
@@ -18,39 +20,48 @@ Route::get('/', [HomeController::class, 'view'])->name('welcome');
 // Missing Report route
 Route::get('/missing-reports', [HomeController::class, 'index'])->name('missing-reports');
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::group(['middleware' => 'admin.guest'], function () {
-        Route::get('/login', [AdminController::class, 'login_view'])->name('admin.login.view');
-        Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
-    });
+// Route::group(['prefix' => 'admin'], function () {
+//     Route::group(['middleware' => 'admin.guest'], function () {
+//         Route::get('/login', [AdminController::class, 'login_view'])->name('admin.login.view');
+//         Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+//     });
 
-    Route::group(['middleware' => 'admin.auth'], function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('user/{id}', [AdminController::class, 'userProfile'])->name('user.profile');
+//     Route::group(['middleware' => 'admin.auth'], function () {
+//         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+//         Route::get('user/{id}', [AdminController::class, 'userProfile'])->name('users.profile');
 
-        Route::get('pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_users');
-        Route::get('users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.users.approve');
+//         Route::get('pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_users');
+//         Route::get('users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.users.approve');
 
-        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-    });
-});
+//         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+//     });
+// });
 
 
-Route::group(['prefix' => 'user'], function () {
-    Route::group(['middleware' => 'guest'], function () {
-        // Authenticated page route
-        Route::get('/login', [UserAuthController::class, 'login_view'])->name('login-view');
-        Route::post('/login', [UserAuthController::class, 'login'])->name('login');
+// Route::group(['prefix' => 'user'], function () {
+//     Route::group(['middleware' => 'guest'], function () {
+//         // Authenticated page route
+//         Route::get('/login', [UserAuthController::class, 'login_view'])->name('login-view');
+//         Route::post('/login', [UserAuthController::class, 'login'])->name('login');
 
-        Route::get('/register', [UserAuthController::class, 'register_view'])->name('register-view');
-        Route::post('/register', [UserAuthController::class, 'register'])->name('register');
-    });
+//         Route::get('/register', [UserAuthController::class, 'register_view'])->name('register-view');
+//         Route::post('/register', [UserAuthController::class, 'register'])->name('register');
+//     });
 
-    Route::group(['middleware' => 'auth'], function () {
-        Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('user.dashboard');
-        Route::post('/logout', [UserAuthController::class, 'logout'])->name('user.logout');
-    });
-});
+//     Route::group(['middleware' => 'auth'], function () {
+//         Route::get('/dashboard', [UserAuthController::class, 'dashboard'])->name('user.dashboard');
+//         Route::post('/logout', [UserAuthController::class, 'logout'])->name('user.logout');
+
+//         Route::get('profile', [UserController::class, 'showProfile'])->name('user.profile');
+//         Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
+//         Route::delete('/profile/delete', [UserController::class, 'deleteAccount'])->name('user.profile.delete');
+
+        
+//         Route::get('/response/edit/{id}', [ResponseController::class, 'edit'])->name('edit-response');
+//         Route::put('/response/update/{id}', [ResponseController::class, 'update'])->name('response.update');
+//         Route::delete('/response/delete/{id}', [ResponseController::class, 'destroy'])->name('response.delete');
+//     });
+// });
 
 
 

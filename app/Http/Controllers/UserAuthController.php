@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\MissingPerson;
 use App\Models\Notification;
+use App\Models\SubmittedInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,8 @@ class UserAuthController extends Controller
     {
         $user = Auth::user(); // Get the currently authenticated user
         $missing = MissingPerson::where('user_email', Auth::user()->email)->get();
-        return view('auth.user_dashboard', compact('user', 'missing'));
+        $submittedInfo = SubmittedInfo::where('user_id', Auth::user()->id)->get();
+        return view('auth.user_dashboard', compact('user', 'missing', 'submittedInfo'));
     }
 
 

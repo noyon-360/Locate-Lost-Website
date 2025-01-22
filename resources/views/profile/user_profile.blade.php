@@ -36,11 +36,11 @@
         </ul>
 
         <h3 class="text-xl font-bold mt-6">Missing Reports:</h3>
-        @if($user->missingReports->isEmpty())
+        @if($user->missingPersons->isEmpty())
         <p class="mt-2">This user has no missing reports.</p>
         @else
         <ul class="mt-4">
-            @foreach($user->missingReports as $report)
+            @foreach($user->missingPersons as $report)
             <li class="mb-2">
                 <strong>Report ID:</strong> {{ $report->id }}<br>
                 <strong>Full Name:</strong> {{ $report->fullname }}<br>

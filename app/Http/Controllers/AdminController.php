@@ -28,18 +28,20 @@ class AdminController extends Controller
     {
         // $user_data = User::where('email')->get();
 
-        $users = User::withCount('missingReports')->get();
+        $users = User::withCount('missingPersons')->get();
+        
+        // This is to get the count of the new users who have not been approved yet
         $pendingUsersCount = User::where('status', 'pending')->count();
 
         // echo '<pre>';
-        // print_r($users);
+        // print_r($pendingUsersCount);
 
         return view('admin.admin_dashboard', compact('users', 'pendingUsersCount'));
     }
 
     public function userProfile($id)
     {
-        $user = User::with('missingReports')->findOrFail($id); // Get user with their missing reports
+        $user = User::with('missingPersons')->findOrFail($id); // Get user with their missing reports
         return view('profile.user_profile', compact('user'));
     }
 

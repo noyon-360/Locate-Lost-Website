@@ -23,11 +23,16 @@ class User extends Model implements AuthenticatableContract
         'remember_token',
     ];
 
-    
 
-    public function missingReports()
+
+    public function missingPersons()
     {
-        return $this->hasMany(MissingPerson::class, 'user_email', 'email');
+        return $this->hasMany(MissingPerson::class);
+    }
+
+    public function submittedInfos()
+    {
+        return $this->hasMany(SubmittedInfo::class);
     }
 
     protected static function boot()
@@ -35,7 +40,13 @@ class User extends Model implements AuthenticatableContract
         parent::boot();
 
         static::deleting(function ($user) {
-            $user->missingReports()->delete();
+            $user->missingPersons()->each(function ($missingPerson) {
+                $missingPerson->delete();
+            });
+
+            $user->submittedInfos()->each(function ($submittedInfo) {
+                $submittedInfo->delete();
+            });
         });
     }
 }

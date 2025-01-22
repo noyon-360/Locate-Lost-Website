@@ -35,6 +35,7 @@ class UsersSeeder extends Seeder
                 'password' => $user['password'],
                 'role' => $user['role'],
                 'profile_picture' => $user['profile_picture'],
+                'missing_reports_count' => $user['missing_reports_count'],
                 'last_login_at' => $user['last_login_at'],
                 'status' => $user['status'],
                 'created_at' => $user['created_at'],
