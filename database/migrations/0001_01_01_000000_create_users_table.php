@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone_number')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['user', 'admin'])->default('user');
+            $table->string('role');
             $table->string('profile_picture')->nullable();
             $table->string('last_login_at')->nullable();
-            $table->unsignedInteger('missing_reports_count')->default(0);
+            // $table->unsignedInteger('missing_reports_count')->default(0);
             $table->string('status')->default('pending');
+            // statoins. show all the stations list
+            $table->string('station_name')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

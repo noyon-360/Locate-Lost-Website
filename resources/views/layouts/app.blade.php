@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </link>
 
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+
     @vite('resources/js/imageModal.js')
     @vite('resources/js/toggleDrawer.js')
     @vite('resources/css/app.css')
@@ -42,9 +45,7 @@
                 <a href="{{ route('missing-reports') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Missing Reports</a>
 
-                <a href="{{ route('add-missing-person') }}"
-                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing
-                    Report</a>
+                
 
                 @if(Auth::guard('admin')->check())
                 <!-- Admin Links -->
@@ -71,11 +72,32 @@
                         Logout
                     </button>
                 </form>
+
+                @elseif(Auth::guard('station')->check())
+                <a href="{{ route('add-missing-person') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing Report
+                </a>
+                <a href="{{ route('station.dashboard') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">
+                    Station Dashboard
+                </a>
+                @include('layouts.station_profile_dropdown')
+                <form action="{{ route('station.logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-white hover:bg-red-600 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </form>
+
                 @else
                 <!-- Guest Links -->
                 <a href="{{ route('admin.login') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">
                     Admin
+                </a>
+                <a href="{{ route('station.login') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">
+                    Station
                 </a>
                 <a href="{{ route('login') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">
@@ -91,14 +113,24 @@
         <div id="drawer" class="md:hidden hidden">
             <div class="flex flex-col space-y-2 mt-4">
 
-                <a href="{{ route('add-missing-person') }}"
-                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing
-                    Report</a>
+
 
                 @if(Auth::guard('admin')->check())
                 <a href="{{ route('admin.dashboard') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Admin Dashboard</a>
                 <form action="{{ route('admin.logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit"
+                        class="text-white hover:bg-red-600 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+                </form>
+
+                @elseif(Auth::guard('station')->check())
+                <a href="{{ route('add-missing-person') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing Report
+                </a>
+                <a href="{{ route('station.dashboard') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">station Dashboard</a>
+                <form action="{{ route('station.logout') }}" method="POST" class="inline">
                     @csrf
                     <button type="submit"
                         class="text-white hover:bg-red-600 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
@@ -116,10 +148,18 @@
 
 
                 @else
+                <a href="{{ route('add-missing-person') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Missing Report
+                </a>
                 <a href="{{ route('admin.login') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+
+                <a href="{{ route('station.login') }}"
+                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Station</a>
+
                 <a href="{{ route('login') }}"
                     class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+
                 <a href="{{ route('register') }}"
                     class="text-white hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium">Register</a>
                 @endif

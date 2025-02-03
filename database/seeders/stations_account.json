@@ -1,0 +1,54 @@
+[
+    {
+        "type": "header",
+        "version": "5.2.1",
+        "comment": "Export to JSON plugin for PHPMyAdmin"
+    },
+    {
+        "type": "database",
+        "name": "locat_lost"
+    },
+    {
+        "type": "table",
+        "name": "stations",
+        "database": "locat_lost",
+        "data": [
+            {
+                "id": "1",
+                "station_name": "Northern Hub",
+                "email": "northernhub@gmail.com",
+                "password": "$2y$12$Ge8n1mQiGGPoUgWqSs3Fsubt9bEDKnlchZN6A5eUAhd.BpuTGij8a",
+                "station_picture": "uploads\/station_pictures\/wedn1pQFt1c5A94GdrrVcxUMRwFiWaozHCqc0jAK.jpg",
+                "last_login_at": "2025-01-24 13:26:33",
+                "status": "approved",
+                "remember_token": null,
+                "created_at": "2025-01-24 13:25:55",
+                "updated_at": "2025-01-24 13:26:33"
+            },
+            {
+                "id": "2",
+                "station_name": "Central Gateway",
+                "email": "centralgateway@gmail.com",
+                "password": "$2y$12$Ge8n1mQiGGPoUgWqSs3Fsubt9bEDKnlchZN6A5eUAhd.BpuTGij8a",
+                "station_picture": "uploads\/station_pictures\/wedn1pQFt1c5A94GdrrVcxUMRwFiWaozHCqc0jAK.jpg",
+                "last_login_at": "2025-01-24 13:26:33",
+                "status": "approved",
+                "remember_token": null,
+                "created_at": "2025-01-24 13:25:55",
+                "updated_at": "2025-01-24 13:26:33"
+            },
+            {
+                "id": "3",
+                "station_name": "Eastern Junction",
+                "email": "easternjunction@gmail.com",
+                "password": "$2y$12$Ge8n1mQiGGPoUgWqSs3Fsubt9bEDKnlchZN6A5eUAhd.BpuTGij8a",
+                "station_picture": "uploads\/station_pictures\/wedn1pQFt1c5A94GdrrVcxUMRwFiWaozHCqc0jAK.jpg",
+                "last_login_at": "2025-01-24 13:26:33",
+                "status": "approved",
+                "remember_token": null,
+                "created_at": "2025-01-24 13:25:55",
+                "updated_at": "2025-01-24 13:26:33"
+            }
+        ]
+    }
+]

@@ -18,7 +18,7 @@
     <div class="container mx-auto p-4 sm:p-6">
         <div class="bg-darkSlate p-6 rounded-lg shadow-lg max-w-4xl mx-auto border border-darkBlue">
             <h1 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-lightGray">
-                <i class="fas fa-user-secret"></i> Missing Person Report
+                Missing Person Report
             </h1>
             @if (session('error'))
             <div class="bg-red-500 text-white p-2 rounded mb-4">

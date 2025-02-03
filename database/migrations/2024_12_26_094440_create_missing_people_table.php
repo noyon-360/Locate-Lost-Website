@@ -9,29 +9,29 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('missing_people', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname', 255);
+            $table->string('fullname');
             $table->date('date_of_birth');
             $table->string('gender');
             $table->string('permanent_address');
             $table->text('last_seen_location_description');
-            $table->string('father_name', 255);
-            $table->string('mother_name', 255);
-            $table->string('contact_number', 15);
-            $table->string('email', 255);
+            $table->string('father_name');
+            $table->string('mother_name');
+            $table->string('contact_number')->unique();
+            $table->string('email')->unique();
             $table->string('front_image');
             $table->json('additional_pictures')->nullable();
-            $table->string('user_email');
-            $table->unsignedBigInteger('user_id');
             $table->date('missing_date')->nullable();
-            $table->enum('status', ['pending', 'found'])->default('pending');
+            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->string('submitted_by');
+            // $table->unsignedBigInteger('reported_by');
             $table->timestamps();
 
-            // Foreign key constraint (optional, if you have a users table)
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('reported_by')->references('id')->on('stations');
+            // $table->foreignId('reported_by')->constrained('stations')->onDelete('cascade');
         });
     }
 

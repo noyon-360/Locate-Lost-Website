@@ -6,6 +6,17 @@
         <h1 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-lightGray">
             <i class="fas fa-sign-in-alt"></i> Login
         </h1>
+        <!-- Show error messages -->
+        @if ($errors->any())
+        <div class="bg-red-500 text-white p-2 rounded mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-4">

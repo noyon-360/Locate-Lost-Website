@@ -72,21 +72,32 @@
         <div class="flex justify-center mb-4">
             <button class="tab-button px-4 py-2 mx-2 bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-tab="pending">Pending</button>
             <button class="tab-button px-4 py-2 mx-2 bg-gray-300 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-tab="all">All</button>
-            <button class="tab-button px-4 py-2 mx-2 bg-gray-300 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-tab="found">Complete</button>
+            <button class="tab-button px-4 py-2 mx-2 bg-gray-300 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-tab="completed">Complete</button>
         </div>
 
         <!-- Missing Persons Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($missingPersons as $person)
             <div class="missing-person bg-white p-6 rounded-lg shadow-md relative {{ $person->status }}">
+
+
+
                 <!-- Front Image Container -->
                 <div class="relative w-full h-64 mb-4 rounded-md overflow-hidden">
                     <img src="{{ asset('storage/' . $person->front_image) }}" alt="Front image of {{ $person->fullname }}" class="w-full h-full object-cover">
 
+                    <!-- Status Badge -->
+                    @if($person->status === 'completed')
+                    <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                        Completed
+                    </span>
+                    @endif
+
                     <!-- User Profile Image -->
-                    @if($person->user)
-                    <a href="{{ route('common-profile', ['id' => $person->user->id]) }}" class="absolute top-0 right-0 m-2">
-                        <img src="{{ asset('storage/' . $person->user->profile_picture) }}" alt="Profile picture of {{ $person->user->name }}" class="w-8 h-8 rounded-full border-2 border-white shadow-md hover:opacity-75" title="{{ $person->user->name }}">
+                    @if($person->station)
+
+                    <a href="{{ route('station-profile', ['id' => $person->station->id]) }}" class="absolute top-0 right-0 m-2">
+                        <img src="{{ asset('storage/' . $person->station->station_picture) }}" alt="Profile picture of {{ $person->station->station_name }}" class="w-8 h-8 rounded-full border-2 border-white shadow-md hover:opacity-75" title="{{ $person->station->station_name }}">
                     </a>
                     @endif
                 </div>

@@ -11,7 +11,11 @@ class SubmittedInfo extends Model
         'description',
         'latitude',
         'longitude',
-        'user_id'
+        'user_id',
+        'station_id',
+        'submitted_by',
+        'station_name',
+        'role',
     ];
 
     public function missingPerson()
@@ -22,5 +26,10 @@ class SubmittedInfo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function station()
+    {
+        return $this->belongsTo(Stations::class);
     }
 }

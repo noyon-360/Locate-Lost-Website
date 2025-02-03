@@ -1,63 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    @vite('resources/css/app.css')
-    <!-- Include Tailwind CSS -->
-</head>
+@section('content')
 
 <body class="bg-gray-100">
-    <header class="bg-blue-600 text-white py-4 px-6">
-        <div class="flex justify-between items-center">
-            <h1 class="text-xl font-bold">User Profile</h1>
-            <div class="flex items-center space-x-4">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Back to Dashboard</a>
 
 
-                <form action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="bg-red-500 px-4 py-2 rounded">Logout</button>
-                </form>
+    <main class="pt-12 px-6">
+        <!-- User Details Section -->
+        <section class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">User Details</h2>
+            <ul class="space-y-3 text-gray-800">
+                <li><strong>Name:</strong> {{ $user->name }}</li>
+                <li><strong>Email:</strong> {{ $user->email }}</li>
+                <li><strong>Role:</strong> {{ ucfirst($user->role) }}</li>
+                <p class="text-sm  text-gray-800">Created At:
+                        {{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, H:i') }}
+                    </p>
+                    <p class="text-sm  text-gray-800">Last Login:
+                        {{ $user->last_login_at ? \Carbon\Carbon::parse($user->last_login_at)->format('d M Y, H:i') : 'N/A' }}
+                    </p>
+            </ul>
+        </section>
+
+        <!-- Missing Reports Section -->
+        <section>
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Missing Reports</h3>
+            @if($user->reports->isEmpty())
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <p class="text-gray-600">No missing reports found for this user.</p>
             </div>
-        </div>
-    </header>
-    <main class="p-6">
-        <h2 class="text-2xl font-bold">User Details</h2>
-        <ul class="mt-4">
-            <li><strong>Name:</strong> {{ $user->name }}</li>
-            <li><strong>Email:</strong> {{ $user->email }}</li>
-            <li><strong>Role:</strong> {{ ucfirst($user->role) }}</li>
-            <li><strong>Created At:</strong> {{ $user->created_at }}</li>
-            <li><strong>Last Login At:</strong> {{ $user->last_login_at }}</li>
-        </ul>
+            @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($user->reports as $report)
+                <div class="bg-white shadow-md rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition">
+                    <h4 class="text-lg font-semibold text-gray-800">Response ID: {{ $report->id }}</h4>
+                    <p class="text-gray-600"><strong>Report ID:</strong> {{ $report->missing_person_id }}</p>
+                    <p class="text-gray-600"><strong>Response:</strong> {{ Str::limit($report->description, 100) }}</p>
+                    <p class="text-sm text-gray-500 mt-2"><strong>Response Date:</strong> {{ $report->created_at->format('d M Y, H:i') }}</p>
 
-        <h3 class="text-xl font-bold mt-6">Missing Reports:</h3>
-        @if($user->missingPersons->isEmpty())
-        <p class="mt-2">This user has no missing reports.</p>
-        @else
-        <ul class="mt-4">
-            @foreach($user->missingPersons as $report)
-            <li class="mb-2">
-                <strong>Report ID:</strong> {{ $report->id }}<br>
-                <strong>Full Name:</strong> {{ $report->fullname }}<br>
-                <strong>Date of Birth:</strong> {{ $report->date_of_birth }}<br>
-                <strong>Gender:</strong> {{ $report->gender }}<br>
-                <strong>Permanent Address:</strong> {{ $report->permanent_address }}<br>
-                <strong>Last Seen Location:</strong> {{ $report->last_seen_location_description }}<br>
-                <strong>Father's Name:</strong> {{ $report->father_name }}<br>
-                <strong>Mother's Name:</strong> {{ $report->mother_name }}<br>
-                <strong>Contact Number:</strong> {{ $report->contact_number }}<br>
-                <strong>Email:</strong> {{ $report->email }}<br>
-                <strong>Date Reported:</strong> {{ $report->created_at->format('d M Y') }}
-            </li>
-            @endforeach
-        </ul>
-        @endif
+                    <a href="{{ route('show-location', ['id' => $report->id]) }}" class="text-blue-500 hover:underline mt-2 block">View Location</a>
+                </div>
+                @endforeach
+            </div>
+            @endif
+        </section>
     </main>
 </body>
-
-</html>
+@endsection

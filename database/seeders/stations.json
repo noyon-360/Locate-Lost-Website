@@ -1,0 +1,92 @@
+[
+    {"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+    {"type":"database","name":"locat_lost"},
+    {"type":"table","name":"station_names_locations","database":"locat_lost","data":
+    [
+        {
+            "station_name": "Northern Hub",
+            "locations": [
+                "Airport",
+                "Kawla",
+                "Khilkhet",
+                "Shewra",
+                "Banani",
+                "Chairman Bari",
+                "Mohakhali"
+            ]
+        },
+        {
+            "station_name": "Central Gateway",
+            "locations": [
+                "Station Road",
+                "Abdullahpur",
+                "House Building",
+                "Rajlakshmi",
+                "Jashimuddin"
+            ]
+        },
+        {
+            "station_name": "Eastern Junction",
+            "locations": [
+                "Hosain Market",
+                "Shofiuddin",
+                "Collage Gate",
+                "Cherag Ali",
+                "Mill Gate"
+            ]
+        },
+        {
+            "station_name": "Uttara Terminus",
+            "locations": [
+                "Sector 4",
+                "Sector 9",
+                "Uttara Model Town",
+                "Diabari",
+                "Azampur"
+            ]
+        },
+        {
+            "station_name": "Bashundhara Link",
+            "locations": [
+                "Bashundhara Residential Area",
+                "Jamuna Future Park",
+                "Baridhara DOHS",
+                "Kuril",
+                "Notun Bazar"
+            ]
+        },
+        {
+            "station_name": "Old Dhaka Point",
+            "locations": [
+                "Sadarghat",
+                "Chawk Bazar",
+                "Lalbagh",
+                "Ahsan Manzil",
+                "Shankhari Bazar"
+            ]
+        },
+        {
+            "station_name": "Gulshan Circle",
+            "locations": [
+                "Gulshan 1",
+                "Gulshan 2",
+                "Banani Lake",
+                "Baridhara",
+                "Tejgaon-Gulshan Link Road"
+            ]
+        },
+        {
+            "station_name": "Mirpur Exchange",
+            "locations": [
+                "Mirpur 1",
+                "Mirpur 10",
+                "Pallabi",
+                "Kazipara",
+                "Agargaon"
+            ]
+        }
+    ]
+    }
+]
+
+

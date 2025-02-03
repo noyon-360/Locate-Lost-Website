@@ -24,4 +24,9 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function station()
+    {
+        return $this->belongsTo(Stations::class);
+    }
 }

@@ -24,8 +24,8 @@ Route::group(['prefix' => 'user'], function () {
         Route::delete('/profile/delete', [UserController::class, 'deleteAccount'])->name('user.profile.delete');
 
         
-        Route::get('/response/edit/{id}', [ResponseController::class, 'edit'])->name('edit-response');
-        Route::put('/response/update/{id}', [ResponseController::class, 'update'])->name('response.update');
-        Route::delete('/response/delete/{id}', [ResponseController::class, 'destroy'])->name('response.delete');
+        // Route::get('/response/edit/{id}', [ResponseController::class, 'edit'])->name('edit-response');
+        // Route::put('/response/update/{id}', [ResponseController::class, 'update'])->name('response.update');
+        // Route::delete('/response/delete/{id}', [ResponseController::class, 'destroy'])->name('response.delete');
     });
 });

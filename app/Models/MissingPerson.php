@@ -12,7 +12,6 @@ class MissingPerson extends EloquentModel
 
     protected $fillable = [
         'user_id',
-        'user_email',
         'fullname',
         'date_of_birth',
         'gender',
@@ -25,7 +24,8 @@ class MissingPerson extends EloquentModel
         'front_image',
         'additional_pictures',
         'missing_date',
-        'status'
+        'status',
+        'submitted_by'
     ];
 
     // Add the relationship method
@@ -34,21 +34,54 @@ class MissingPerson extends EloquentModel
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function station()
+    {
+        return $this->belongsTo(Stations::class, 'submitted_by', 'email');
+    }
+
+    public function submitter()
+    {
+        return $this->belongsTo(Stations::class);
+    }
+
     public function submittedInfos()
     {
-        return $this->hasMany(SubmittedInfo::class);
+        return $this->hasMany(MissingReports::class);
     }
 
-    protected static function boot()
+    public function reports()
     {
-        parent::boot();
-
-        static::created(function ($missingPerson) {
-            $missingPerson->user->increment('missing_reports_count');
-        });
-
-        static::deleted(function ($missingPerson) {
-            $missingPerson->user->decrement('missing_reports_count');
-        });
+        return $this->hasMany(MissingReports::class, 'missing_person_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'missing_report_id');
+    }
+
+    public function completions()
+    {
+        return $this->hasMany(Completion::class, 'missing_person_id');
+    }
+
+    public function lastLocation()
+    {
+        return $this->hasOne(MissingReports::class, 'missing_person_id')
+            ->latest() // Gets the most recent report
+            ->withDefault(); // Returns empty model if no relationship exists
+    }
+
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::created(function ($missingPerson) {
+    //         $missingPerson->user->increment('missing_reports_count');
+    //     });
+
+    //     static::deleted(function ($missingPerson) {
+    //         $missingPerson->user->decrement('missing_reports_count');
+    //     });
+    // }
 }

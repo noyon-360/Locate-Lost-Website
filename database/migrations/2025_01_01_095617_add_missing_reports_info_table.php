@@ -17,12 +17,18 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('station_id')->nullable();
+            $table->string('submitted_by')->nullable();
+            $table->string('station_name')->nullable();
+            $table->string('role');
             $table->timestamps();
-            
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        
             $table->foreign('missing_person_id')->references('id')->on('missing_people')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('station_id')->references('id')->on('stations')->onDelete('cascade');
         });
+        
     }
 
     /**

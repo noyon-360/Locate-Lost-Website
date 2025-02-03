@@ -42,6 +42,34 @@
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <!-- Phone number -->
+                    <div class="mb-4">
+                        <label for="phone_number" class="block text-lightGray font-medium mb-1">Phone Number</label>
+                        <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}"
+                            class="w-full px-2 py-1 border border-lightGray rounded-lg text-lightGray focus:outline-none focus:ring-2 focus:ring-lightGray">
+                        @error('phone_number')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Station Name -->
+                    <div class="mb-4">
+                        <label for="station_name" class="block text-lightGray font-medium mb-1">Station Name</label>
+                        <select id="station_name" name="station_name"
+                            class="w-full px-2 py-1 border border-lightGray rounded-lg text-lightGray focus:outline-none focus:ring-2 focus:ring-lightGray">
+                            <option value="">Select Station</option>
+                            @foreach($stations as $station)
+                            <option value="{{ $station->station_name }}"
+                                {{ old('station_name') == $station->station_name ? 'selected' : '' }}>
+                                {{ $station->station_name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('station_name')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <!-- Divider Line -->
                 <div class="hidden sm:block w-px bg-gray-300 mx-4"></div>

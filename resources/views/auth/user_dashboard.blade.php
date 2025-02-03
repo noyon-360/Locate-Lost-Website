@@ -18,7 +18,7 @@
         <div class="fixed inset-y-0 left-0 bg-blue-600 text-white z-40 transform transition-all duration-300 ease-in-out"
             :class="{'w-64': drawerOpen, 'w-16': !drawerOpen}" x-cloak>
             <div class="p-6 flex items-center justify-between" x-show="drawerOpen" x-transition>
-                <h1 class="text-2xl font-bold">Dashboard</h1>
+                <h1 class="text-2xl font-bold">User Dashboard</h1>
 
             </div>
             <nav class="mt-2">
@@ -58,13 +58,7 @@
                             <span class="ml-3" x-show="drawerOpen" x-transition>Profile</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="currentPage = 'Responses'; localStorage.setItem('currentPage', 'Responses')" class="flex items-center p-3 hover:bg-blue-700 rounded transition"
-                            :class="{'bg-blue-700': currentPage === 'Responses'}">
-                            <i class="fas fa-book"></i>
-                            <span class="ml-3" x-show="drawerOpen" x-transition>Responses</span>
-                        </a>
-                    </li>
+
 
                     <li>
                         <form action="{{ route('user.logout') }}" method="POST">
@@ -109,70 +103,46 @@
                         </ul>
                     </section>
 
-                    <!-- Your Missing Reports -->
-                    <section>
-                        <h3 class="text-xl font-bold text-gray-700 mb-4">Your Missing Reports</h3>
-                        @if($missing->isEmpty())
-                        <div class="bg-white shadow rounded p-4">
-                            <p class="text-gray-600">You have no missing reports.</p>
-                        </div>
-                        @else
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($missing as $report)
-                            <div class="bg-white shadow rounded p-4">
-                                <a href="{{ route('person.details', ['id' => $report->id]) }}" class="block rounded-lg p-1 hover:bg-blue-50 cursor-pointer transition">
-                                    <div class="flex items-center space-x-4 mb-4">
-                                        <img src="{{ $report->front_image ? asset('storage/' . $report->front_image) : 'https://placehold.co/128x128?text=Missing+Person' }}"
-                                            alt="Profile picture of {{ $report->fullname }}"
-                                            class="w-16 h-16 object-cover rounded-full shadow-md">
-                                        <div>
-                                            <h4 class="text-lg font-semibold text-gray-800">{{ $report->fullname }}</h4>
-                                            <p class="text-gray-500 text-sm">Reported on: {{ \Carbon\Carbon::parse($report->created_at)->format('d M Y, H:i') }}</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Report ID:</strong> {{ $report->id }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Date of Birth:</strong> {{ $report->date_of_birth }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Gender:</strong> {{ $report->gender }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Permanent Address:</strong> {{ $report->permanent_address }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Last Seen Location:</strong> {{ $report->last_seen_location_description }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Father's Name:</strong> {{ $report->father_name }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Mother's Name:</strong> {{ $report->mother_name }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Contact Number:</strong> {{ $report->contact_number }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Email:</strong> {{ $report->email }}</p>
-                                    <p class="text-gray-500 text-sm mt-2 truncate"><strong>Date Reported:</strong> {{ $report->created_at->format('d M Y') }}</p>
+                    <!-- Your Responses -->
+                    
 
-                                    <!-- Additional Pictures Section -->
-                                    <div class="mt-6 grid grid-cols-3 gap-2">
-                                        @foreach(json_decode($report->additional_pictures) as $picture)
-                                        <img src="{{ asset('storage/' . $picture) }}"
-                                            alt="Additional picture of {{ $report->fullname }}"
-                                            class="w-full h-20 object-cover rounded-md border border-gray-200">
-                                        @endforeach
-                                    </div>
-                                </a>
-                                <!-- Action Buttons -->
-                                <div class="grid grid-cols-2 gap-4 mt-4">
-                                    <a href="{{ route('edit-missing-person', ['id' => $report->id]) }}">
-                                        <div class="bg-blue-500 text-white px-4 py-2 rounded text-center shadow hover:bg-blue-600">
-                                            Edit
+                        <!-- Show the submitted info -->
+                        <div class="bg-white shadow rounded p-6">
+                            <h2 class="text-xl font-semibold mb-4">Your Responses</h2>
+                            @if($submittedInfo->isEmpty())
+                            <p class="text-gray-600">You have no responses.</p>
+                            @else
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                @foreach($submittedInfo as $response)
+                                <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                                    <h3 class="text-lg font-semibold mb-2">Response ID: {{ $response->id }}</h3>
+                                    <p class="text-gray-700"><strong>Report ID:</strong> {{ $response->missing_person_id }}</p>
+                                    <p class="text-gray-700"><strong>Response:</strong> {{ $response->description }}</p>
+                                    <p class="text-gray-700"><strong>Response Date:</strong> {{ $response->created_at->format('d M Y, H:i') }}</p>
+                                    <a href="{{ route('show-location', ['id' => $response->id]) }}" class="text-blue-500 hover:underline mt-2 inline-block">View Location</a>
+                                    <!-- Action Buttons -->
+                                    <div class="grid grid-cols-2 gap-4 mt-4">
+                                        <a href="{{ route('edit-response', ['id' => $response->id]) }}">
+                                            <div class="bg-blue-500 text-white px-4 py-2 rounded text-center shadow hover:bg-blue-600">
+                                                Edit
+                                            </div>
+                                        </a>
+                                        <div class="bg-red-500 text-white px-4 py-2 rounded text-center shadow hover:bg-red-600 cursor-pointer">
+                                            <form action="{{ route('response.delete', ['id' => $response->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this response?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-full h-full text-white">
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </div>
-                                    </a>
-
-                                    <div class="bg-red-500 text-white px-4 py-2 rounded text-center shadow hover:bg-red-600 cursor-pointer">
-                                        <form action="{{ route('report.delete', ['id' => $report->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this report?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-full h-full text-white">
-                                                Delete
-                                            </button>
-                                        </form>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
+                            @endif
                         </div>
-                        @endif
-                    </section>
+                    
                 </div>
             </template>
 
@@ -226,49 +196,7 @@
             </template>
 
 
-            <!-- Responses Tab -->
-            <template x-if="currentPage === 'Responses'">
-                <div class="container p-10">
-                    <h2 class="text-2xl font-bold mb-4">Responses</h2>
-                    <p class="mb-6">Access your Responses here.</p>
-                    <!-- Show the submitted info -->
-                    <div class="bg-white shadow rounded p-6">
-                        <h2 class="text-xl font-semibold mb-4">Your Responses</h2>
-                        @if($submittedInfo->isEmpty())
-                        <p class="text-gray-600">You have no responses.</p>
-                        @else
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($submittedInfo as $response)
-                            <div class="bg-gray-100 p-4 rounded-lg shadow-md">
-                                <h3 class="text-lg font-semibold mb-2">Response ID: {{ $response->id }}</h3>
-                                <p class="text-gray-700"><strong>Report ID:</strong> {{ $response->missing_person_id }}</p>
-                                <p class="text-gray-700"><strong>Response:</strong> {{ $response->description }}</p>
-                                <p class="text-gray-700"><strong>Response Date:</strong> {{ $response->created_at->format('d M Y, H:i') }}</p>
-                                <a href="{{ route('show-location', ['id' => $response->id]) }}" class="text-blue-500 hover:underline mt-2 inline-block">View Location</a>
-                                <!-- Action Buttons -->
-                                <div class="grid grid-cols-2 gap-4 mt-4">
-                                    <a href="{{ route('edit-response', ['id' => $response->id]) }}">
-                                        <div class="bg-blue-500 text-white px-4 py-2 rounded text-center shadow hover:bg-blue-600">
-                                            Edit
-                                        </div>
-                                    </a>
-                                    <div class="bg-red-500 text-white px-4 py-2 rounded text-center shadow hover:bg-red-600 cursor-pointer">
-                                        <form action="{{ route('response.delete', ['id' => $response->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this response?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-full h-full text-white">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </template>
+
 
 
             <!-- Missing Reports -->

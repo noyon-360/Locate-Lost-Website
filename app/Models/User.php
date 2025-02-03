@@ -16,6 +16,9 @@ class User extends Model implements AuthenticatableContract
         'password',
         'role',
         'profile_picture',
+        'phone_number',
+        'station_name',
+        'status',
     ];
 
     protected $hidden = [
@@ -24,16 +27,27 @@ class User extends Model implements AuthenticatableContract
     ];
 
 
+    public function station()
+    {
+        return $this->belongsTo(Stations::class, 'station_name', 'station_name');
+    }
 
     public function missingPersons()
     {
         return $this->hasMany(MissingPerson::class);
     }
 
-    public function submittedInfos()
+    // public function submittedInfos()
+    // {
+    //     return $this->hasMany(SubmittedInfo::class);
+    // }
+
+    public function reports()
     {
-        return $this->hasMany(SubmittedInfo::class);
+        return $this->hasMany(MissingReports::class, 'user_id');
     }
+
+
 
     protected static function boot()
     {

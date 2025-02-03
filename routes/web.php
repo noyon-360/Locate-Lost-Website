@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
@@ -28,10 +29,9 @@ Route::get('/missing-reports', [HomeController::class, 'index'])->name('missing-
 
 //     Route::group(['middleware' => 'admin.auth'], function () {
 //         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-//         Route::get('user/{id}', [AdminController::class, 'userProfile'])->name('users.profile');
 
-//         Route::get('pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_users');
-//         Route::get('users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.users.approve');
+//         Route::get('pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending_accounts');
+//         Route::get('users/{id}/approve', [AdminController::class, 'approveUser'])->name('admin.user.approve');
 
 //         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 //     });
@@ -56,7 +56,7 @@ Route::get('/missing-reports', [HomeController::class, 'index'])->name('missing-
 //         Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
 //         Route::delete('/profile/delete', [UserController::class, 'deleteAccount'])->name('user.profile.delete');
 
-        
+
 //         Route::get('/response/edit/{id}', [ResponseController::class, 'edit'])->name('edit-response');
 //         Route::put('/response/update/{id}', [ResponseController::class, 'update'])->name('response.update');
 //         Route::delete('/response/delete/{id}', [ResponseController::class, 'destroy'])->name('response.delete');
@@ -72,34 +72,45 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 Route::get('map', [LocationController::class, 'showMapForm']);
 Route::post('map', [LocationController::class, 'storeLocation']);
 
-// Add missing person route
-Route::get('/add-missing-person', function () {
-    return view('missing_person.add_missing_person');
-})->name('add-missing-person');
 
 
 
 
-Route::middleware(['auth:web,admin'])->group(function () {
 
-    Route::get('/profile/{id}', [ProfileController::class, 'commonProfile'])->name('common-profile');
+Route::middleware(['auth:web,admin,station'])->group(function () {
 
-    Route::post('/submit-missing-person', [MissingPersonController::class, 'store'])->name('submit-missing-person');
+    // Route::get('/profile/{id}', [ProfileController::class, 'stationProfile'])->name('station-profile');
 
-    Route::get('/missing-person-success/{id}', [MissingPersonController::class, 'showSuccess'])->name('missing-person-success');
+    // Route::post('/submit-missing-person', [MissingPersonController::class, 'store'])->name('submit-missing-person');
 
-    Route::get('/edit-missing-person/{id}', [MissingPersonController::class, 'edit'])->name('edit-missing-person');
-    Route::put('/update-missing-person/{id}', [MissingPersonController::class, 'update'])->name('update-missing-person');
+    // Route::get('/missing-person-success/{id}', [MissingPersonController::class, 'showSuccess'])->name('missing-person-success');
+
+    // Route::get('/edit-missing-person/{id}', [MissingPersonController::class, 'edit'])->name('edit-missing-person');
+    // Route::put('/update-missing-person/{id}', [MissingPersonController::class, 'update'])->name('update-missing-person');
 
 
     Route::get('/person/{id}', [MissingPersonController::class, 'person_details_show'])->name('person.details');
     Route::get('/missing_person/{id}/add_info', [MissingPersonController::class, 'addInfo'])->name('missing_person.add_info');
     Route::post('/missing_person/{id}/store_info', [MissingPersonController::class, 'storeInfo'])->name('missing_person.store_info');
 
+    // Route::get('user/{id}', [AdminController::class, 'userProfile'])->name('users.profile');
+
     Route::get('/location/{id}', [MissingPersonController::class, 'showLocation'])->name('show-location');
+    
+
 
     Route::delete('/report/update/{id}', [MissingPersonController::class, 'destroy'])->name('report.delete');
+
+    // Response routes
+    Route::get('/response/edit/{id}', [ResponseController::class, 'edit'])->name('edit-response');
+    Route::put('/response/update/{id}', [ResponseController::class, 'update'])->name('response.update');
+    Route::delete('/response/delete/{id}', [ResponseController::class, 'destroy'])->name('response.delete');
+
+
+    // comment routes
+    Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment.store');
 });
+
 
 // Route::middleware(['auth:web, admin'])->get('/add-missing-person', [MissingPersonController::class, 'missiongPersonView'])->name('add-missing-person');
 // Route::get('/add-missing-person', [MissingPersonController::class, 'missiongPersonView'])->name('add-missing-person');
