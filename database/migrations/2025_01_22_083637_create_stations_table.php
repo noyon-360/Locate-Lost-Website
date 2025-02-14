@@ -16,19 +16,19 @@ return new class extends Migration
             $table->string('station_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('station_picture');
-            $table->string('last_login_at');
+            $table->string('station_picture')->nullable();
+            $table->string('last_login_at')->nullable();
             $table->string('status');
             $table->string('role')->default('station');
             $table->rememberToken();
             $table->timestamps();
         });
 
-        Schema::dropIfExists('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
+        // Schema::dropIfExists('password_reset_tokens', function (Blueprint $table) {
+        //     $table->string('email')->primary();
+        //     $table->string('token');
+        //     $table->timestamp('created_at')->nullable();
+        // });
 
         // Note: User submission detaion makeing problem maybe its also make problem for the station check
 
