@@ -7,60 +7,116 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Locate Lost
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Locate Lost is a web application designed to help find missing persons. The application allows multiple stations to add missing reports, users to view these reports, submit comments, and provide seen locations. The stations can then work on the information submitted by users to locate the missing persons.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Admin Dashboard**: Manage users and stations, view pending accounts, and approve or reject registrations.
+  ![Admin Dashboard](screenshots/admin_dashboard.png)
+- **Station Dashboard**: Add missing person reports, view and manage reports, and respond to user submissions.
+  ![Station Dashboard](screenshots/station_dashboard.png)
+- **User Dashboard**: View missing person reports, submit comments, and provide seen locations with map pinning functionality.
+  ![User Dashboard](screenshots/user_dashboard.png)
+- **Interactive Map**: Users can pin locations on the map where they have seen the missing person.
+  ![Interactive Map](screenshots/interactive_map.png)
+- **Notifications**: Stations and admins receive notifications for new submissions and updates.
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/locate-lost.git
+    cd locate-lost
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Install dependencies:
+    ```sh
+    composer install
+    npm install
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Copy the [`.env.example`](.env.example ) file to [`.env`](.env ) and configure your environment variables:
+    ```sh
+    cp .env.example .env
+    ```
 
-## Laravel Sponsors
+4. Generate an application key:
+    ```sh
+    php artisan keygenerate
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Run the database migrations:
+    ```sh
+    php artisan migrate
+    ```
 
-### Premium Partners
+6. Seed the database (optional):
+    ```sh
+    php artisan db:seed
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+7. Start the development server:
+    ```sh
+    php artisan serve
+    npm run dev
+    ```
+
+## Usage
+
+### Admin
+
+- **Dashboard**: View admin details, manage users and stations, and view pending accounts.
+  ![Admin Dashboard](https://github.com/user-attachments/assets/d23805d2-d9f7-4936-91d7-be80082ec9f9)
+- **Pending Accounts**: Approve or reject user and station registrations.
+  ![Pending Accounts](screenshots/pending_accounts.png)
+  ![Pending Accounts](![Image](https://github.com/user-attachments/assets/2c101bdf-cc01-4233-a3a9-09051f4e9dee)
+![Image](https://github.com/user-attachments/assets/bf63e2bc-6671-4630-93c6-301d2727ccb8)
+![Image](https://github.com/user-attachments/assets/8cf99223-fa67-416c-a131-b1e7e268cd7d)
+![Image](https://github.com/user-attachments/assets/d23805d2-d9f7-4936-91d7-be80082ec9f9)
+![Image](https://github.com/user-attachments/assets/4ce61955-e7d4-41cd-83cb-63a0529ddb30))
+### Station
+
+- **Dashboard**: Add and manage missing person reports, view user submissions, and respond to them.
+  ![Station Dashboard](screenshots/station_dashboard_usage.png)
+- **Add Missing Person**: Fill out the form with personal information, missing info, family info, contact info, and upload images.
+  ![Add Missing Person](screenshots/add_missing_person.png)
+
+### User
+
+- **Dashboard**: View personal details, missing reports, and submit comments and seen locations.
+  ![User Dashboard](screenshots/user_dashboard_usage.png)
+- **View Missing Reports**: Search and filter missing person reports, view details, and submit information.
+  ![View Missing Reports](screenshots/view_missing_reports.png)
+
+### Map Functionality
+
+- **Add Info**: Users can pin locations on the map where they have seen the missing person.
+  ![Add Info](screenshots/add_info.png)
+- **View Location**: View the pinned location on the map with details of the submission.
+  ![View Location](screenshots/view_location.png)
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are welcome! Please follow these steps to contribute:
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/your-feature-name`).
+5. Open a pull request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgements
+
+- [Laravel](https://laravel.com) - The PHP framework used.
+- [Leaflet](https://leafletjs.com) - The JavaScript library for interactive maps.
+- [Tailwind CSS](https://tailwindcss.com) - The CSS framework used for styling.
+
+## Contact
+
+For any inquiries or support, please contact [your-email@example.com](mailto:your-email@example.com).
